@@ -1,0 +1,61 @@
+for i in tokens_pos:#in  file with filename i
+    tokenindex = tokens_pos.index(i)
+    pattern = i[0]
+    print(pattern)
+    pattpos = i[1]
+    for filename in os.listdir(dirpath):
+        fname, file_extension = os.path.splitext(filename)
+        if fname == pattern:
+            with open("C:\\Users\\Divya\\Desktop\\search\\" + filename) as f:
+                lines = [line for line in f.readlines()]  # read lines from file
+                # print("OKK")
+            for line in lines:
+                tokenizer = RegexpTokenizer(r'\w+')
+                tokens = tokenizer.tokenize(line)  # tokenize line
+                tpos = pos_tag(tokens)  # pos tag of results
+                content_tokens = ngrams(line,5) #contenttokens contain ngrams of length 5 or less
+                flag = 0
+                score = 1
+                for tokenline in content_tokens:
+                    for item in tokenline:
+                        if pattern == item:
+                            itemindex = tokenline.index(item)
+                            flag = 1
+                            if flag == 1:
+                                litemindex = itemindex - 1 #left
+                                ltokenindex = tokenindex - 1 #left
+                                ritemindex = itemindex + 1 #right
+                                rtokenindex = tokenindex + 1 #right
+                                if tokens_pos[ltokenindex] == "" || tokenline[litemindex] == "":
+                                # no problem
+                                if tokens_pos[rtokenindex] == "": || tokenline[ritemindex] == "":
+                                    # no problem
+                                if tokenline[litemindex] == tokens_pos[ltokenindex]:
+                                score = score + 1
+                                if tokens_pos[rtokenindex] == tokenline[ritemindex]:
+                                score = score + 1
+                            else:
+                                #break
+
+
+
+
+def ngrams(input,n):
+    output = []
+    for j in input:
+        j = j.split(' ')
+        if(len(j) < n):
+            t = len(j)
+            for i in range(len(j)-t+1):
+                output.append(j[i:i+t])
+        else:
+            for i in range(len(j) - n + 1):
+                output.append(j[i:i + n])
+    return output
+
+
+nmlist = ['sonw white called for','quick brown foc jumoed form nrms sj']
+index = 5
+jjud = ngrams(nmlist,index)
+
+print(jjud)

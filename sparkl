@@ -1,0 +1,33 @@
+import pymedtermino
+pymedtermino.LANGUAGE = "en"
+pymedtermino.REMOVE_SUPPRESSED_CONCEPTS = True
+
+from pymedtermino import *
+from pymedtermino.snomedct import *
+from nltk import pos_tag
+
+print("ok")
+concept = SNOMEDCT[23689006]
+#print(concept)
+#print(concept.terms)
+
+
+jj = SNOMEDCT.search("abdomen pain")
+print(jj)
+
+tt = SNOMEDCT.concept(23689006)
+print(tt)
+
+'''print(concept.parents)
+print(concept.children)
+
+for ancestor in concept.ancestors(): print(ancestor)
+list(concept.ancestors())
+list(concept.descendants())
+
+print("OK")
+print(concept.relations)
+
+#Interest in disease, clinical findings, observable entities, procedured, substance and treatments...remove concepts with parents not of these categories
+
+'''

@@ -1,0 +1,67 @@
+from nltk import pos_tag
+from nltk.tokenize import RegexpTokenizer
+import os
+'''
+with open("C:\\Users\\Divya\\Desktop\\jump.txt") as f:
+    lines = [line for line in f.readlines()]
+    print("OKK")
+
+from nltk.tokenize import PunktSentenceTokenizer
+sent_tokenize = PunktSentenceTokenizer()
+#read file from folder skip
+# if empty -> skip
+count = 0
+dirpath = "C:\\Users\\Divya\\Desktop\\search"
+for filename in os.listdir(dirpath):
+    print("ENTERINGG" + filename)
+    while(count < 2):
+        with open("C:\\Users\\Divya\\Desktop\\search\\" + filename) as f:
+            lines = [line for line in f.readlines()] #read lines from file
+            print("OKK")
+            print(type(lines))
+        for line in lines:
+            tokenizer = RegexpTokenizer(r'\w+')
+            tokens = tokenizer.tokenize(line)   #tokenize line
+            tokens_pos = pos_tag(tokens)    #pos tag line
+            print(tokens_pos)
+    count = count +1
+
+wordcheck = "sickle"
+
+#file_object = open("C:\\Users\\Divya\\Desktop\\search\\file_abdomen.txt")
+#para = file_object.read()
+
+with open("C:\\Users\\Divya\\Desktop\\search\\file_abdomen.txt") as f:
+    lines = [line for line in f.readlines()]
+
+#print(lines[1])
+
+
+#for line in lines:
+tokenizer = RegexpTokenizer(r'\w+')
+tokens = tokenizer.tokenize(lines[1])
+print(tokens)
+
+#not interest in token 0 and 1 at this point
+print(tokens[3])
+#tokens_pos = pos_tag(para)
+#print(tokens_pos)
+
+
+
+list = ['cat','dog','a','run']
+
+tokens_pos = pos_tag(list)
+print(tokens_pos)
+
+dt_tags = [t[0] for t in tokens_pos if t[0] == "cat"]
+print(dt_tags)
+#dt_tags == "NNP"]
+#print(dt_tags)
+
+'''
+
+with open("C:\\Users\\Divya\\Downloads\\ReadMe.txt") as f:
+    lines = [line for line in f.readlines()]  # read lines from file
+    print("OKK")
+    print(type(lines))
