@@ -13,11 +13,11 @@ from pymedtermino import *
 from pymedtermino.snomedct import *
 
 #MAIN FOLDER PATH
-mainpath="C:\Users\Divya\Desktop\FILES\AVERAGE"
+mainpath = "C:\\Users\\Divya\\Desktop\\datasetsplit\\common"
 
 #OUTER MOST FOR LOOP
 for filenamemain in os.listdir(mainpath):
-    file_object = open(mainpath+filenamemain)
+    file_object = open(mainpath+ "\\" +filenamemain)
     para = file_object.read()
 
     '''#sentence boundary
@@ -44,8 +44,12 @@ for filenamemain in os.listdir(mainpath):
     words = new_list
     lemma = WordNetLemmatizer()
 
+    dict = ['in','address','the','of']
     myList = [lemma.lemmatize(word,pos='v') for word in words if word not in english_stops]
     print (myList)
+
+    myList = [word for word in myList if word not in dict]
+    print(myList)
 
 #POS tagging
     tokens_pos = pos_tag(myList)
@@ -61,17 +65,22 @@ for filenamemain in os.listdir(mainpath):
         f.write(str(i)+'\n')
     '''
 #search for reult of token from SNOMEDCT ontology
-    mp="C:\\Users\\Divya\\"+filenamemain
-    def make_sure_path_exists(mp):
-        try:
-            os.makedirs(mp)
-        except OSError as exception:
-            if exception.errno != errno.EEXIST:
-                raise
+    fnamev, file_extension = os.path.splitext(filenamemain)
+    mp = "C:\\Users\\Divya\\SOME\\" + fnamev
+    print(mp)
+
+
+    def make_sure_path_exists(path):
+        os.makedirs(path, exist_ok=True)
+
+    cogg = 0
+    make_sure_path_exists(mp)
     for i in myList:
-        jj = SNOMEDCT.search(i) #the  datatype of jj is snomedct type
-        with io.open(mp + "\\" + str(i) + ".txt", 'w', encoding='utf-8') as f: #save the results in file
-            f.write(str(jj)+'\n')
+        jj = SNOMEDCT.search(i)  # the  datatype of jj is snomedct type
+        with io.open(mp + "\\" + str(i) + ".txt", 'w', encoding='utf-8') as f:  # save the results in file
+            f.write(str(jj) + '\n')
+            cogg = cogg + 1
+    print("donee")
 
     print("ok")
 
@@ -114,10 +123,10 @@ for filenamemain in os.listdir(mainpath):
                             if j[1] != pattpos:
                                 lines.remove(line)
                                 print(filename)
-                with io.open("C:\\Users\\Divya\\Desktop\\linerems\\" + str(i[0]) + ".txt", 'w', encoding='utf-8') as f:  # save the results in file
-                    f.write(str(lines) + '\n')
+                with io.open("C:\\Users\\Divya\\Desktop\\linerdd\\" + str(i[0]) + ".txt", 'w', encoding='utf-8') as f:  # save the results in file
+                    f.write(str(lines))
 
-    for i in tokens_pos:  # in  file with filename i
+  for i in tokens_pos:  # in  file with filename i
         tokenindex = tokens_pos.index(i)
         pattern = i[0]
         print(pattern)
@@ -149,16 +158,42 @@ for filenamemain in os.listdir(mainpath):
                                     # dldmm
                                     # if tokens_pos[rtokenindex] == "": or tokenline[ritemindex] == "":
                                     # kdmdl
-                                    if tokenline[litemindex] == tokens_pos[ltokenindex]:
+                                    if tokenline[litemindex] == tokens_pos[ltokenindex] or  tokens_pos[rtokenindex] == tokenline[ritemindex]:
                                         score = score + 1
-                                    if tokens_pos[rtokenindex] == tokenline[ritemindex]:
-                                        score = score + 1
-                                else:
-                            # break
+                                    if tokens_pos[rtokenindex] == tokenline[ritemindex] and tokenline[litemindex] == tokens_pos[ltokenindex]:
+                                        score = score + 2
+                while(score < 3):
+                    lines.remove(line)
+                    with io.open("C:\\Users\\Divya\\Desktop\\EHRDATA RELATED FILES\\jesuobso\\" + str(i[0]) + ".txt", 'w',encoding='utf-8') as f:  # save the results in file
+                                    f.write(str(lines) + '\n')
+                                    # break
 
 
+        #hfilt
+    for i in tokens_pos:  # in  file with filename i
+        tokenindex = tokens_pos.index(i)
+        pattern = i[0]
+        print(pattern)
+        pattpos = i[1]
+        for filename in os.listdir(dirpath):
+            fname, file_extension = os.path.splitext(filename)
+            if fname == pattern:
+                with open("C:\\Users\\Divya\\Desktop\\search\\" + filename) as f:
+                    lines = [line for line in f.readlines()]  # read lines from file
+                    # print("OKK")
+                    conceptnum = ['913000','3133002','1944003','3133002']
+                for line in lines:
+                    tokenizer = RegexpTokenizer(r'\w+')
+                    tokens = tokenizer.tokenize(line)  # tokenize line
+                    tpos = pos_tag(tokens)  # pos tag of results
+                    conceptnum = conceptnum.append(line[1])
+                    for ij in conceptnum:  # Interest in disease, clinical findings, observable entities, procedures, substance and treatments
+                        conn = SNOMEDCT[ij]
+                        if conn.ancestor != "disorder" or conn.ancestor != "findings" or conn.ancestor != "procedure":
+                            lines.remove(line)
+                with io.open("C:\\Users\\Divya\\Desktop\\EHRDATA RELATED FILES\\suobso\\" + str(i[0]) + ".txt", 'w',
+                             encoding='utf-8') as f:  # save the results in file
+                    f.write(str(lines) + '\n')
 
 
-
-
-                                    ##REMOVE NUMBERS AND IF POSSIBLE NO AGE REMOVAL
+##REMOVE NUMBERS AND IF POSSIBLE NO AGE REMOVAL
