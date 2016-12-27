@@ -26,32 +26,21 @@ for i in tokens_pos:#in  file with filename i
                                 ltokenindex = tokenindex - 1 #left
                                 ritemindex = itemindex + 1 #right
                                 rtokenindex = tokenindex + 1 #right
-                                if tokens_pos[ltokenindex] == "" || tokenline[litemindex] == "":
-                                # no problem
-                                if tokens_pos[rtokenindex] == "": || tokenline[ritemindex] == "":
+                                if tokens_pos[ltokenindex] == "" or tokenline[litemindex] == "":
                                     # no problem
+                                    print("yes")
+                                if tokens_pos[rtokenindex] == "" or tokenline[ritemindex] == "":
+                                    print("yes")
                                 if tokenline[litemindex] == tokens_pos[ltokenindex]:
-                                score = score + 1
+                                    score = score + 1
                                 if tokens_pos[rtokenindex] == tokenline[ritemindex]:
-                                score = score + 1
+                                    score = score + 1
                             else:
                                 #break
 
 
 
 
-def ngrams(input,n):
-    output = []
-    for j in input:
-        j = j.split(' ')
-        if(len(j) < n):
-            t = len(j)
-            for i in range(len(j)-t+1):
-                output.append(j[i:i+t])
-        else:
-            for i in range(len(j) - n + 1):
-                output.append(j[i:i + n])
-    return output
 
 
 nmlist = ['sonw white called for','quick brown foc jumoed form nrms sj']

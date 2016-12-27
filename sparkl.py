@@ -9,16 +9,16 @@ from nltk import pos_tag
 print("ok")
 concept = SNOMEDCT[23689006]
 print(concept)
-#print(concept.terms)
+print(concept.terms)
+
+jj = SNOMEDCT.search("platelet")
 
 
-jj = SNOMEDCT.search("abdomen pain")
-print(jj)
+dt_tags = [t for t in tokens_pos if t[1] == "NNP"]
+print(dt_tags)
 
-tt = SNOMEDCT.concept(23689006)
-print(tt)
-
-'''print(concept.parents)
+#print(jj)
+print(concept.parents)
 print(concept.children)
 
 for ancestor in concept.ancestors(): print(ancestor)
@@ -27,7 +27,3 @@ list(concept.descendants())
 
 print("OK")
 print(concept.relations)
-
-#Interest in disease, clinical findings, observable entities, procedured, substance and treatments...remove concepts with parents not of these categories
-
-'''
